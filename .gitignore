@@ -1,6 +1,3 @@
-# ---- Служебный скрипт выгрузки (не нужен в репозитории) ----
-git_upload.bat
-
 # ---- Visual Studio: кэш и промежуточные файлы сборки ----
 .vs/
 x64/
@@ -40,3 +37,5 @@ installer/payload/res.txt
 installer/payload/log.txt
 installer/payload/uploads/*
 !installer/payload/uploads/.gitkeep
+
+git_upload.bat

@@ -1,8 +1,8 @@
 <h1 align="center">Оптимизатор функций</h1>
 
 
-<h1 align="center">ДЕМО-версия</h1>
-<h1 align="center">https://vanyagin.github.io/GeneticOptimizer/</h1>
+<h2 align="center">ДЕМО-версия</h2>
+<h2 align="center">https://vanyagin.github.io/GeneticOptimizer/</h2>
 
 <p align="center">
   Поиск глобального минимума непрерывных многомерных функций<br>

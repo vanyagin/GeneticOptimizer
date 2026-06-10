@@ -1,0 +1,46 @@
+# ---- Claude (не выгружать) ----
+.claude/
+CLAUDE.md
+
+# ---- Служебный скрипт выгрузки (не нужен в репозитории) ----
+git_upload.bat
+
+# ---- Visual Studio: кэш и промежуточные файлы сборки ----
+.vs/
+x64/
+GeneticAlgoritm/x64/
+*.obj
+*.pdb
+*.ipdb
+*.iobj
+*.tlog
+*.ilk
+*.exp
+*.idb
+*.log
+*.recipe
+*.lastbuildstate
+*.vcxproj.user
+
+# ---- Python ----
+__pycache__/
+*.pyc
+# Встроенный Python скачивается build.bat — в репозитории не нужен
+installer/payload/python/
+
+# ---- Выходы сборки установщика (пересобираются build.bat) ----
+installer/GeneticOptimizer-portable/
+installer/GeneticOptimizer-portable.zip
+installer/*Setup.exe
+installer/GeneticOptimizer-Setup.exe
+
+# ---- Runtime-файлы оптимизатора (создаются при запуске) ----
+GeneticAlgoritm/data2.txt
+GeneticAlgoritm/res.txt
+GeneticAlgoritm/log.txt
+installer/payload/data.txt
+installer/payload/data2.txt
+installer/payload/res.txt
+installer/payload/log.txt
+installer/payload/uploads/*
+!installer/payload/uploads/.gitkeep

@@ -1,5 +1,7 @@
 <h1 align="center">Оптимизатор функций</h1>
 
+
+<h1 align="center">ДЕМО-версия</h1>
 <h1 align="center">https://vanyagin.github.io/GeneticOptimizer/</h1>
 
 <p align="center">

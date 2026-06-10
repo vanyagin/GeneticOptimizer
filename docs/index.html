@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Оптимизатор функций — поиск минимума</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="brand">
+      <div class="brand__text">
+        <div class="brand__title">Оптимизатор функций</div>
+        <div class="brand__sub">поиск глобального минимума · дифференциальная эволюция и алгоритм китов</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+
+    <div class="pod pod--info" style="margin-bottom:14px">
+      <div class="pod__body">
+        <p style="margin:0">Онлайн-демонстрация: все вычисления идут прямо в вашем браузере, сервер не нужен.
+        Версия с загрузкой собственного <code>.exe</code> и C++-ядром доступна в десктопном приложении
+        (см. репозиторий проекта).</p>
+      </div>
+    </div>
+
+    <div id="inputTab" class="tab active">
+      <form id="functionForm">
+
+        <div class="query-box">
+          <textarea id="function" name="function" rows="2" spellcheck="false"
+                    placeholder="Введите функцию через x0, x1, x2 …" required>(x0^2 + x1 - 11)^2 + (x0 + x1^2 - 7)^2</textarea>
+          <button type="submit" class="equals-btn" title="Найти минимум">=</button>
+        </div>
+
+        <div class="options">
+          <div class="options__row">
+            <span class="options__label">Алгоритм:</span>
+            <label class="chip">
+              <input type="radio" name="algorithm" value="de" checked onchange="onAlgoChange()">
+              Дифференциальная эволюция (DE)
+            </label>
+            <label class="chip">
+              <input type="radio" name="algorithm" value="woa" onchange="onAlgoChange()">
+              Алгоритм оптимизации китов (WOA)
+            </label>
+          </div>
+
+          <div class="options__row">
+            <label class="toggle">
+              <input type="checkbox" id="customRangeCheckbox" onchange="toggleRangeInputs()" />
+              Указать диапазоны переменных
+            </label>
+            <label class="toggle">
+              <input type="checkbox" id="advancedSettingsCheckbox">
+              Расширенные настройки алгоритма
+            </label>
+          </div>
+
+          <div id="rangeInputs" class="range-inputs" style="display: none;"></div>
+
+          <div id="advancedSettings" class="adv-grid hidden">
+            <label>Размер популяции
+              <input type="number" step="1" min="4" name="populationSize" value="50"></label>
+            <div id="deParams_input" class="adv-grid adv-grid--sub">
+              <label>F (0–2)
+                <input type="number" step="0.01" min="0" max="2" name="F" value="0.65"></label>
+              <label>CR (0–1)
+                <input type="number" step="0.01" name="CR" value="0.5"></label>
+            </div>
+            <label>Точность ε (10⁻ᴱ)
+              <input type="number" step="1" min="1" name="Eps" value="5"></label>
+            <label>Макс. итераций
+              <input type="number" step="1" min="1" name="maxIterations" value="200"></label>
+          </div>
+        </div>
+
+        <div id="resultPod_input" class="pod" style="display:none">
+          <div class="pod__header">Результат</div>
+          <div class="pod__body">
+            <div id="serverResponse_input" class="server-response"></div>
+          </div>
+        </div>
+
+        <div id="chartPod_input" class="pod" style="display:none">
+          <div class="pod__header">График сходимости</div>
+          <div class="pod__body">
+            <div id="convergenceChart_input" class="chart-container"></div>
+          </div>
+        </div>
+      </form>
+
+      <div class="pod pod--info">
+        <div class="pod__header">Как записать функцию</div>
+        <div class="pod__body">
+          <p>Переменные обозначаются <code>x0</code>, <code>x1</code>, <code>x2</code>, … —
+             нумерация начинается с нуля и идёт без пропусков.</p>
+
+          <table class="ref-table">
+            <tr><th>Операторы</th>
+                <td><code>+</code> <code>-</code> <code>*</code> <code>/</code>,
+                    степень <code>^</code>, скобки <code>( )</code></td></tr>
+            <tr><th>Функции</th>
+                <td><code>sin</code> <code>cos</code> <code>tan</code> <code>asin</code> <code>acos</code> <code>atan</code>
+                    <code>sinh</code> <code>cosh</code> <code>tanh</code>
+                    <code>exp</code> <code>log</code> (нат.) <code>log2</code> <code>log10</code>
+                    <code>sqrt</code> <code>abs</code> <code>sign</code>
+                    <code>min</code> <code>max</code> <code>sum</code> <code>avg</code></td></tr>
+            <tr><th>Константы</th>
+                <td><code>_pi</code> ≈ 3.14159, <code>_e</code> ≈ 2.71828</td></tr>
+            <tr><th>Разделитель</th>
+                <td>дробная часть — через точку: <code>0.5</code>, <code>3.14</code></td></tr>
+          </table>
+
+          <p class="ref-note">Примеры:</p>
+          <ul class="ref-examples">
+            <li><code>(x0^2 + x1 - 11)^2 + (x0 + x1^2 - 7)^2</code> — функция Химмельблау</li>
+            <li><code>100*(x1 - x0^2)^2 + (1 - x0)^2</code> — функция Розенброка</li>
+            <li><code>x0^2 + x1^2 + x2^2</code> — сфера (3 переменные)</li>
+          </ul>
+
+          <p class="ref-note">По умолчанию каждая переменная ищется в диапазоне <code>[-5, 5]</code>.
+             Чтобы задать свои границы, включите «Указать диапазоны переменных».</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="plotly.min.js"></script>
+  <script src="core.js"></script>
+  <script src="ui.js"></script>
+</body>
+</html>

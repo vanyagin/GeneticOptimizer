@@ -1,0 +1,379 @@
+:root {
+  --wa-red:   #dd1100;
+  --wa-orange:#f96932;
+  --ink:      #2b2b2b;
+  --muted:    #6b6b6b;
+  --line:     #e3e3e3;
+  --pod-head: #f6f6f6;
+  --bg:       #ffffff;
+  --code-bg:  #f4f5f7;
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: #fafafa;
+  color: var(--ink);
+  margin: 0;
+  padding: 0 16px 64px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ---------- Шапка ---------- */
+.site-header {
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  margin: 0 -16px 0;
+  padding: 14px 16px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.brand__title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+.brand__sub {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+/* ---------- Раскладка ---------- */
+.layout {
+  max-width: 860px;
+  margin: 0 auto;
+  padding-top: 22px;
+}
+
+/* ---------- Вкладки ---------- */
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+.tabs button {
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--muted);
+  border-radius: 6px;
+  transition: background .15s, color .15s;
+}
+.tabs button:hover { background: #f0f0f0; }
+.tabs button.active {
+  color: var(--ink);
+  font-weight: 600;
+  background: #fff;
+  border-color: var(--line);
+  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.tab { display: none; }
+.tab.active { display: block; }
+
+/* ---------- Поисковая строка (как в WolframAlpha) ---------- */
+.query-box {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid #bfbfbf;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 5px rgba(0,0,0,.10);
+  overflow: hidden;
+  transition: border-color .15s, box-shadow .15s;
+}
+.query-box:focus-within {
+  border-color: var(--wa-orange);
+  box-shadow: 0 1px 8px rgba(249,105,50,.25);
+}
+.query-box textarea {
+  flex: 1 1 auto;
+  border: none;
+  outline: none;
+  resize: vertical;
+  padding: 14px 16px;
+  font-size: 18px;
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  color: var(--ink);
+  background: transparent;
+  min-height: 56px;
+}
+.query-box textarea::placeholder { color: #aaa; }
+
+.equals-btn {
+  flex: 0 0 auto;
+  width: 64px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(180deg, var(--wa-orange) 0%, var(--wa-red) 100%);
+  transition: filter .15s;
+}
+.equals-btn:hover { filter: brightness(1.07); }
+.equals-btn:disabled { filter: grayscale(.4) brightness(1.1); cursor: progress; }
+
+/* строка загрузки файла */
+.query-box--file { align-items: center; padding-left: 4px; }
+.file-fields {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+}
+.file-pick {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-weight: 400;
+}
+.file-pick input[type="file"] {
+  position: absolute;
+  width: 1px; height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+.file-pick__btn {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px solid #c8c8c8;
+  border-radius: 6px;
+  background: #f3f3f3;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.file-pick__btn:hover { background: #ececec; }
+.file-pick__name { font-size: 13.5px; color: var(--muted); }
+.argcount {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.argcount input {
+  width: 84px;
+  padding: 7px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+/* ---------- Опции под строкой ---------- */
+.options {
+  margin: 14px 2px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.options__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+}
+.options__label {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.chip input[type="radio"] { accent-color: var(--wa-red); transform: scale(1.05); }
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--muted);
+}
+.toggle input[type="checkbox"] { accent-color: var(--wa-red); transform: scale(1.1); }
+
+/* сетка расширенных настроек */
+.adv-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.adv-grid--sub {
+  padding: 0;
+  border: none;
+  background: transparent;
+  gap: 10px 18px;
+}
+.adv-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12.5px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.adv-grid input[type="number"] {
+  width: 130px;
+  padding: 7px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+/* диапазоны переменных */
+.range-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.range-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.range-row label { margin: 0; font-weight: 600; min-width: 40px; }
+.range-row input {
+  width: 110px;
+  padding: 7px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+.hidden { display: none !important; }
+
+/* ---------- Поды (карточки результатов / инструкций) ---------- */
+.pod {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  margin-top: 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  overflow: hidden;
+}
+.pod__header {
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #555;
+  background: var(--pod-head);
+  border-bottom: 1px solid var(--line);
+}
+.pod__body { padding: 16px; }
+.pod--info .pod__body p { margin: 0 0 10px; }
+.pod--info .pod__body p:last-child { margin-bottom: 0; }
+
+/* блок результата */
+.server-response {
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  font-size: 14px;
+  white-space: pre-wrap;
+  color: var(--ink);
+}
+.server-response:empty { display: none; }
+.server-response--error {
+  color: #b00020;
+}
+
+/* индикатор вычисления */
+.loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+}
+.spinner {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  border: 2px solid #e0e0e0;
+  border-top-color: var(--wa-red);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.chart-container { width: 100%; }
+
+/* ---------- Справочные элементы внутри инструкций ---------- */
+code {
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  font-size: 13px;
+  background: var(--code-bg);
+  padding: 1px 6px;
+  border-radius: 4px;
+  color: #b3401f;
+}
+.ref-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 4px 0 12px;
+}
+.ref-table th, .ref-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: 13.5px;
+}
+.ref-table th {
+  width: 130px;
+  color: var(--muted);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.ref-table td code { margin-right: 2px; }
+.ref-note { color: var(--muted); font-size: 13.5px; }
+.ref-examples { margin: 4px 0 12px; padding-left: 20px; }
+.ref-examples li { margin-bottom: 6px; }
+.ref-steps { margin: 4px 0 12px; padding-left: 22px; }
+.ref-steps li { margin-bottom: 8px; }
+.ref-code {
+  margin: 4px 0 0;
+  padding: 12px 14px;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  font-size: 13px;
+  white-space: pre;
+  overflow-x: auto;
+  color: #444;
+}
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 560px) {
+  .query-box textarea { font-size: 16px; }
+  .equals-btn { width: 52px; font-size: 22px; }
+  .ref-table th { width: auto; }
+}
